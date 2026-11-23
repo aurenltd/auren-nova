@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090a0c">
+  <title>AI Study Assistant | AUREN.NOVA</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #090a0c;
+      --panel: #111316;
+      --panel-light: #191c20;
+      --silver: #d8dce0;
+      --muted: #858b93;
+      --gold: #c6a878;
+      --border: rgba(255,255,255,0.09);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--silver);
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(9,10,12,0.92);
+    }
+
+    .brand {
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: 3px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .status {
+      color: #a6b7a7;
+      font-size: 12px;
+    }
+
+    .back {
+      color: var(--silver);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    .back:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    main {
+      width: min(900px, 92%);
+      margin: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 55px 0 25px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: auto 0 35px;
+      animation: appear .8s ease both;
+    }
+
+    .orb {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      border: 1px solid rgba(198,168,120,.55);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 45px rgba(198,168,120,.09),
+                  inset 0 0 25px rgba(198,168,120,.08);
+      position: relative;
+    }
+
+    .orb::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(216,220,224,.35);
+      border-radius: 50%;
+      animation: rotate 12s linear infinite;
+    }
+
+    .orb span {
+      font-size: 27px;
+      color: var(--gold);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: -1.5px;
+      font-weight: 550;
+      margin-bottom: 15px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .suggestions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .suggestion {
+      text-align: left;
+      background: var(--panel);
+      color: var(--silver);
+      border: 1px solid var(--border);
+      padding: 17px;
+      border-radius: 12px;
+      transition: .25s;
+    }
+
+    .suggestion:hover {
+      background: var(--panel-light);
+      border-color: rgba(198,168,120,.5);
+      transform: translateY(-2px);
+    }
+
+    .suggestion strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .suggestion small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .chat-area {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 15px 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      animation: appear .25s ease;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background: #24272b;
+      border: 1px solid var(--border);
+    }
+
+    .assistant-message {
+      align-self: flex-start;
+      background: var(--panel);
+      border: 1px solid rgba(198,168,120,.2);
+    }
+
+    .message-label {
+      display: block;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 7px;
+    }
+
+    .composer {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.2);
+      margin-top: auto;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 55px;
+      max-height: 150px;
+      resize: vertical;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    textarea::placeholder {
+      color: #737982;
+    }
+
+    .composer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .composer-note {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .send {
+      border: none;
+      background: var(--silver);
+      color: #090a0c;
+      border-radius: 9px;
+      padding: 11px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .send:hover {
+      background: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    .send:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #656b73;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media(max-width: 600px) {
+      header {
+        padding: 0 4%;
+        height: 65px;
+      }
+
+      .brand {
+        font-size: 15px;
+        letter-spacing: 2px;
+      }
+
+      .status {
+        display: none;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .message {
+        max-width: 95%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <div class="brand">AUREN<span>.</span>NOVA</div>
+
+      <div class="header-right">
+        <span class="status">STUDY WORKSPACE</span>
+        <a href="index.html" class="back">← Home</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="welcome" id="welcome">
+        <div class="orb"><span>✧</span></div>
+
+        <div class="eyebrow">YOUR PERSONAL STUDY SPACE</div>
+
+        <h1>What shall we learn today?</h1>
+
+        <p>
+          Ask questions, explore concepts and understand your subjects
+          one step at a time.
+        </p>
+
+        <div class="suggestions">
+          <button class="suggestion"
+            data-prompt="Explain Newton's laws of motion in simple steps.">
+            <strong>Understand a concept</strong>
+            <small>Break difficult topics into simple explanations.</small>
+          </button>
+
+          <button class="suggestion"
+            data-prompt="Help me create a study plan for my exams.">
+            <strong>Build a study plan</strong>
+            <small>Organise your learning and revision.</small>
+          </button>
+
+          <button class="suggestion"
+            data-prompt="Give me a short quiz to test my understanding.">
+            <strong>Test my knowledge</strong>
+            <small>Practise what you have learned.</small>
+          </button>
+
+          <button class="suggestion"
+            data-prompt="Explain a difficult maths problem step by step.">
+            <strong>Solve a problem</strong>
+            <small>Work through questions step by step.</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="chat-area" id="chatArea"
+        aria-live="polite"></section>
+
+      <form class="composer" id="chatForm">
+        <textarea id="question"
+          placeholder="Ask your study question..."
+          aria-label="Your study question"
+          required></textarea>
+
+        <div class="composer-bottom">
+          <span class="composer-note">
+            AUREN.NOVA · AI STUDY ASSISTANT
+          </span>
+
+          <button class="send" type="submit">Send ↗</button>
+        </div>
+      </form>
+    </main>
+
+    <footer>
+      AUREN.NOVA — BUILT FOR LEARNING
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById("chatForm");
+    const question = document.getElementById("question");
+    const chatArea = document.getElementById("chatArea");
+    const welcome = document.getElementById("welcome");
+
+    function addMessage(text, type, label) {
+      const message = document.createElement("div");
+      message.className = "message " + type;
+
+      const heading = document.createElement("span");
+      heading.className = "message-label";
+      heading.textContent = label;
+
+      const content = document.createElement("div");
+      content.textContent = text;
+
+      message.append(heading, content);
+      chatArea.appendChild(message);
+      message.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+
+    function sendQuestion(text) {
+      const cleaned = text.trim();
+      if (!cleaned) return;
+
+      welcome.style.display = "none";
+      chatArea.style.display = "flex";
+
+      addMessage(cleaned, "user-message", "YOU");
+
+      addMessage(
+        "Your question has been added to the chat interface. " +
+        "The real AI connection has not been configured yet. " +
+        "We'll connect a suitable free AI service through a secure " +
+        "backend in the next development stage.",
+        "assistant-message",
+        "AUREN.NOVA"
+      );
+
+      question.value = "";
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      sendQuestion(question.value);
+    });
+
+    document.querySelectorAll(".suggestion").forEach(button => {
+      button.addEventListener("click", () => {
+        sendQuestion(button.dataset.prompt);
+      });
+    });
+  </script>
+</body>
+</html>

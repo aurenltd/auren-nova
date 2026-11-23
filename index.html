@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080909">
+<title>AUREN.NOVA — Infinite Possibilities</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#080909;
+  --card:#111414;
+  --gold:#dfbd91;
+  --silver:#c5c9c8;
+  --white:#f5f3ef;
+  --muted:#858b88;
+  --line:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+#particles{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.glow{position:fixed;width:350px;height:350px;background:#bd925344;filter:blur(110px);border-radius:50%;top:20%;left:35%;z-index:-1;pointer-events:none}
+header{height:75px;position:fixed;z-index:100;top:0;width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#080909e8;backdrop-filter:blur(25px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;font:800 15px Manrope;letter-spacing:2px}
+.logo b{color:var(--gold)}
+.mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--gold);color:var(--gold);transform:rotate(45deg);font-size:18px}
+.mark span{transform:rotate(-45deg)}
+nav{display:flex;gap:27px}
+nav a{font-size:11px;color:#aaa;transition:.3s}
+nav a:hover{color:var(--gold)}
+.header-right{display:flex;align-items:center;gap:13px}
+.search{background:#141716;border:1px solid var(--line);padding:10px 14px;border-radius:25px;color:white;width:180px;outline:none;font-size:10px}
+.signin{border:0;background:var(--gold);color:#111;padding:11px 19px;border-radius:25px;font-size:11px;font-weight:700}
+.menu{display:none;background:none;border:0;color:white;font-size:22px}
+main{padding-top:75px}
+.hero{min-height:580px;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:55px 8%;overflow:hidden;position:relative}
+.hero-content{z-index:2}
+.eyebrow{color:var(--gold);font-size:9px;letter-spacing:3px;font-weight:700;margin-bottom:22px}
+.hero h1{font:800 clamp(40px,5vw,68px)/1.13 Manrope;letter-spacing:-3px}
+.hero h1 span,.heading span,.workspace h2 span{color:var(--gold)}
+.hero p{font-size:12px;line-height:1.9;color:#999;max-width:440px;margin:22px 0 28px}
+.buttons{display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:28px;font-size:10px;font-weight:700;border:1px solid var(--gold);transition:.3s}
+.btn:hover{transform:translateY(-4px);box-shadow:0 8px 30px #dfbd9140}
+.primary{background:var(--gold);color:#111}
+.secondary{color:white;background:transparent}
+.hero-art{height:410px;display:grid;place-items:center;position:relative;perspective:900px}
+.emblem{width:170px;height:170px;display:grid;place-items:center;position:relative;z-index:2;border-radius:32px;background:linear-gradient(145deg,#f0d9b6,#292b29 40%,#090a0a 75%);box-shadow:0 0 75px #dfbd9150;transform:rotate(-35deg);animation:float 5s ease-in-out infinite}
+.emblem:before{content:"";position:absolute;inset:9px;border-radius:25px;background:#101211;border:1px solid var(--gold)}
+.emblem span{position:relative;color:var(--gold);font:800 90px Manrope;transform:rotate(35deg);text-shadow:0 0 30px #dfbd91}
+.ring{position:absolute;width:350px;height:115px;border:1px solid var(--gold);border-radius:50%;animation:orbit 12s linear infinite}
+.ring.two{width:390px;height:150px;border-color:#b9c0bd;animation:orbit2 16s linear infinite}
+.ring.three{width:280px;height:270px;border-color:#dfbd9160;animation:orbit 22s linear infinite}
+.orb{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 20px 5px #dfbd91}
+.orb.one{top:17%;left:25%}
+.orb.two{right:17%;bottom:18%}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes orbit2{to{transform:rotate(-360deg)}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -17px}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);padding:27px 7%;border-block:1px solid var(--line);text-align:center}
+.stats h3{font:800 24px Manrope;color:var(--gold)}
+.stats p{font-size:9px;color:var(--muted);margin-top:7px}
+.section{padding:85px 8%}
+.heading{text-align:center;margin-bottom:40px}
+.heading h2{font:800 clamp(28px,4vw,43px) Manrope}
+.heading p{color:var(--muted);font-size:11px;margin-top:12px}
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.tool{min-height:165px;padding:22px 17px;text-align:left;color:white;background:linear-gradient(145deg,#191c1b,#0d1010);border:1px solid var(--line);border-radius:15px;transition:.35s;position:relative;overflow:hidden}
+.tool:hover{transform:translateY(-7px);border-color:#dfbd91;box-shadow:0 15px 35px #0008}
+.tool-icon{font-size:25px;color:var(--gold);display:block;margin-bottom:18px}
+.tool h3{font:700 13px Manrope;margin-bottom:9px}
+.tool p{font-size:10px;color:#999;line-height:1.7}
+.more{background:linear-gradient(145deg,#302719,#111414)}
+.chat-area{max-width:750px;margin:auto;border:1px solid var(--line);background:#111414;border-radius:20px;padding:25px}
+.chat-top{display:flex;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line);font-size:10px}
+.online{color:#9fc79d}
+.chat-welcome{text-align:center;padding:40px 10px}
+.chat-welcome h3{font:700 21px Manrope}
+.chat-welcome p{font-size:10px;color:#888;margin-top:12px}
+.chat-form{display:flex;gap:10px;border:1px solid var(--line);border-radius:30px;padding:8px}
+.chat-form input{flex:1;min-width:0;background:none;border:0;outline:0;color:white;padding-left:12px;font-size:11px}
+.chat-form button{width:38px;height:38px;border:0;border-radius:50%;background:var(--gold);color:#111;font-size:18px}
+.note{text-align:center;font-size:9px;color:#777;margin-top:12px}
+.workspace{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:45px}
+.workspace h2{font:800 38px Manrope}
+.workspace p{font-size:11px;line-height:1.9;color:#999;margin:20px 0}
+.visual{height:270px;display:grid;place-items:center;border:1px solid #dfbd9145;border-radius:20px;background:radial-gradient(circle,#b28b5a35,transparent 65%),#101313;overflow:hidden}
+.visual span{font:800 60px Manrope;color:var(--gold);text-shadow:0 0 35px #dfbd91;animation:float 4s infinite}
+.pricing{max-width:480px;margin:auto;padding:32px;border:1px solid #dfbd9170;border-radius:18px;background:linear-gradient(145deg,#1a1c1b,#0d1010)}
+.pricing h3{font:800 30px Manrope;margin:12px 0}
+.pricing p,.pricing li{font-size:10px;color:#999;line-height:2}
+.pricing ul{padding-left:20px;margin:20px 0}
+footer{padding:30px 7%;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#777;font-size:10px}
+.toast{position:fixed;z-index:200;bottom:25px;left:50%;transform:translate(-50%,25px);opacity:0;pointer-events:none;background:#202321;border:1px solid #dfbd91;padding:13px 20px;border-radius:30px;font-size:10px;transition:.3s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px){.tools{grid-template-columns:repeat(2,1fr)}nav{gap:13px}.search{display:none}}
+@media(max-width:700px){
+header{padding:0 5%}
+nav{display:none;position:absolute;top:75px;left:0;width:100%;padding:24px;background:#101313;flex-direction:column}
+nav.open{display:flex}
+.menu{display:block}
+.hero{grid-template-columns:1fr;text-align:center;padding:60px 6% 20px}
+.hero p{margin:20px auto}
+.buttons{justify-content:center}
+.hero-art{height:330px}
+.emblem{width:130px;height:130px}
+.emblem span{font-size:70px}
+.ring{width:270px;height:90px}
+.ring.two{width:300px;height:120px}
+.ring.three{width:220px;height:220px}
+.stats{grid-template-columns:repeat(2,1fr);gap:25px}
+.section{padding:65px 5%}
+.workspace{grid-template-columns:1fr;gap:25px}
+.workspace h2{font-size:32px}
+footer{justify-content:center;text-align:center}
+}
+@media(max-width:390px){.tools{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+
+<body>
+<canvas id="particles"></canvas>
+<div class="glow"></div>
+
+<header>
+<a href="#home" class="logo"><span class="mark"><span>A</span></span>AUREN.<b>NOVA</b></a>
+<nav id="navigation">
+<a href="#home">Home</a>
+<a href="#tools">AI Tools</a>
+<a href="#chat">AI Chat</a>
+<a href="#studio">Studio</a>
+<a href="#pricing">Upgrade</a>
+</nav>
+<div class="header-right">
+<input class="search" id="search" placeholder="Search AI tools...">
+<button class="signin" onclick="notify('Account services will be connected next.')">Sign In ↗</button>
+<button class="menu" id="menu">☰</button>
+</div>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="hero-content">
+<div class="eyebrow">✦ THE NEXT GENERATION OF AI</div>
+<h1>Beyond Limits.<br><span>Beyond Imagination.</span></h1>
+<p>Discover a new dimension of creativity and intelligence. One powerful AI platform to create, learn, explore and build everything you imagine.</p>
+<div class="buttons">
+<a href="#chat" class="btn primary">Explore AUREN.NOVA →</a>
+<a href="#tools" class="btn secondary">Discover Tools ↗</a>
+</div>
+</div>
+<div class="hero-art">
+<div class="ring"></div>
+<div class="ring two"></div>
+<div class="ring three"></div>
+<div class="emblem"><span>A</span></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+</div>
+</section>
+
+<section class="stats">
+<div><h3>∞</h3><p>Infinite Possibilities</p></div>
+<div><h3>15+</h3><p>AI Tools</p></div>
+<div><h3>24/7</h3><p>Creative Workspace</p></div>
+<div><h3>01</h3><p>Unified Platform</p></div>
+</section>
+
+<section class="section" id="tools">
+<div class="heading">
+<div class="eyebrow">YOUR AI UNIVERSE</div>
+<h2>Everything Starts <span>Here.</span></h2>
+<p>Powerful tools. One intelligent experience.</p>
+</div>
+<div class="tools" id="toolGrid">
+<button class="tool" data-name="AI Chat" onclick="goChat()"><span class="tool-icon">◉</span><h3>AI Chat</h3><p>Ask questions, solve problems and explore ideas.</p></button>
+<button class="tool" data-name="Video Generator" onclick="notify('Video generation requires service integration.')"><span class="tool-icon">▷</span><h3>Video Generator</h3><p>Transform your ideas into cinematic videos.</p></button>
+<button class="tool" data-name="Code Assistant" onclick="notify('Code Assistant requires service integration.')"><span class="tool-icon">⌘</span><h3>Code Assistant</h3><p>Write, understand and improve your code.</p></button>
+<button class="tool" data-name="Study Assistant" onclick="notify('Study Assistant requires service integration.')"><span class="tool-icon">▤</span><h3>Study Assistant</h3><p>Your personal intelligent learning companion.</p></button>
+<button class="tool" data-name="Document AI" onclick="notify('Document AI requires service integration.')"><span class="tool-icon">▧</span><h3>Document AI</h3><p>Understand and analyse your documents.</p></button>
+<button class="tool" data-name="Design Studio" onclick="notify('Design Studio requires service integration.')"><span class="tool-icon">✧</span><h3>Design Studio</h3><p>Explore creative design possibilities.</p></button>
+<button class="tool" data-name="Research AI" onclick="notify('Research AI requires service integration.')"><span class="tool-icon">⌕</span><h3>Research AI</h3><p>Discover information and organise insights.</p></button>
+<button class="tool more" data-name="More Tools" onclick="notify('Explore more tools as the platform grows.')"><span class="tool-icon">⠿</span><h3>More Tools</h3><p>Discover 15+ specialised AI capabilities.</p></button>
+</div>
+</section>
+
+<section class="section" id="chat">
+<div class="heading">
+<div class="eyebrow">INTELLIGENCE AT YOUR FINGERTIPS</div>
+<h2>Meet Your <span>AI Assistant.</span></h2>
+<p>One conversation can take you anywhere.</p>
+</div>
+<div class="chat-area">
+<div class="chat-top"><span>◉ AUREN AI</span><span class="online">● DEMO MODE</span></div>
+<div class="chat-welcome"><h3>What would you like to explore?</h3><p>Start with a question, a thought or a new idea.</p></div>
+<form class="chat-form" id="chatForm">
+<input id="prompt" placeholder="Ask Auren anything..." autocomplete="off">
+<button type="submit">↑</button>
+</form>
+<div class="note" id="chatNote">Connect an AI service to enable real responses.</div>
+</div>
+</section>
+
+<section class="section" id="studio">
+<div class="workspace">
+<div>
+<div class="eyebrow">THE CREATIVE WORKSPACE</div>
+<h2>Imagine More.<br><span>Create Better.</span></h2>
+<p>Bring your ideas together in one modern workspace. Explore new possibilities with intelligent tools designed for your creativity.</p>
+<a href="#tools" class="btn primary">Explore Workspace →</a>
+</div>
+<div class="visual"><span>AUREN.</span></div>
+</div>
+</section>
+
+<section class="section" id="pricing">
+<div class="heading">
+<div class="eyebrow">YOUR NEXT LEVEL</div>
+<h2>Unlock <span>More Possibilities.</span></h2>
+<p>Start exploring. Upgrade when you're ready.</p>
+</div>
+<div class="pricing">
+<div class="eyebrow">STARTER EXPERIENCE</div>
+<h3>Free</h3>
+<p>Explore the AUREN.NOVA interface.</p>
+<ul>
+<li>Explore AI tool categories</li>
+<li>Access the platform interface</li>
+<li>Discover your creative workspace</li>
+</ul>
+<button class="btn primary" onclick="notify('Upgrade and payment services are not connected yet.')">Explore Plans →</button>
+</div>
+</section>
+</main>
+
+<footer>
+<a href="#home" class="logo"><span class="mark"><span>A</span></span>AUREN.<b>NOVA</b></a>
+<span>Infinite Possibilities. One Platform.</span>
+<span>© 2026 AUREN.NOVA</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const toast=document.getElementById('toast');
+let toastTimer;
+
+function notify(message){
+toast.textContent=message;
+toast.classList.add('show');
+clearTimeout(toastTimer);
+toastTimer=setTimeout(()=>toast.classList.remove('show'),2800);
+}
+
+function goChat(){
+document.getElementById('chat').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('menu').addEventListener('click',()=>{
+document.getElementById('navigation').classList.toggle('open');
+});
+
+document.querySelectorAll('nav a').forEach(link=>{
+link.addEventListener('click',()=>{
+document.getElementById('navigation').classList.remove('open');
+});
+});
+
+document.getElementById('search').addEventListener('input',event=>{
+const query=event.target.value.toLowerCase();
+document.querySelectorAll('.tool').forEach(tool=>{
+tool.style.display=tool.textContent.toLowerCase().includes(query)?'':'none';
+});
+});
+
+document.getElementById('chatForm').addEventListener('submit',event=>{
+event.preventDefault();
+const prompt=document.getElementById('prompt');
+if(!prompt.value.trim())return;
+document.getElementById('chatNote').textContent='Demo mode: connect an AI API to receive actual responses.';
+notify('AI service is not connected yet.');
+prompt.value='';
+});
+
+const canvas=document.getElementById('particles');
+const ctx=canvas.getContext('2d');
+let particles=[];
+
+function resize(){
+const ratio=Math.min(window.devicePixelRatio||1,2);
+canvas.width=innerWidth*ratio;
+canvas.height=innerHeight*ratio;
+canvas.style.width=innerWidth+'px';
+canvas.style.height=innerHeight+'px';
+ctx.setTransform(ratio,0,0,ratio,0,0);
+particles=Array.from({length:65},()=>({
+x:Math.random()*innerWidth,
+y:Math.random()*innerHeight,
+size:Math.random()*1.5+.3,
+speed:Math.random()*.3+.08,
+opacity:Math.random()*.5+.1
+}));
+}
+
+function animate(){
+ctx.clearRect(0,0,innerWidth,innerHeight);
+particles.forEach(p=>{
+p.y-=p.speed;
+if(p.y<0){p.y=innerHeight;p.x=Math.random()*innerWidth;}
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle=`rgba(223,189,145,${p.opacity})`;
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+
+resize();
+animate();
+window.addEventListener('resize',resize);
+
+document.addEventListener('mousemove',event=>{
+const glow=document.querySelector('.glow');
+glow.style.left=(event.clientX-175)+'px';
+glow.style.top=(event.clientY-175)+'px';
+});
+</script>
+</body>
+</html>
